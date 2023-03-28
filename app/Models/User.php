@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -47,5 +49,15 @@ class User extends Authenticatable
     public function isVerified(): bool
     {
         return $this->email_verified_at != null;
+    }
+
+    public function study_classes(): BelongsToMany
+    {
+        return $this->belongsToMany(StudyClass::class, 'class_registrations');
+    }
+
+    public function class_registrations(): HasMany
+    {
+        return $this->hasMany(ClassRegistration::class);
     }
 }
