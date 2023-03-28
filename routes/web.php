@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     //Admin & Staff
     Route::resource('/study-class', StudyClassController::class)->except('show');
     Route::get('/study-class/{studyClass}/toggle', [StudyClassController::class, 'toggle'])->name('study-class.toggle');
+    Route::get('/study-class/{studyClass}/students', [StudyClassController::class, 'viewStudents'])->name('study-class.view-students');
     Route::get('/study-class/{studyClass}/manage-students', [StudyClassController::class, 'manageStudents'])->name('study-class.manage-students');
     Route::resource('/students', StudentController::class)->except('show');
     Route::get('/students/{student}/manage-classes', [StudentController::class, 'manageClass'])->name('students.manage-class');
