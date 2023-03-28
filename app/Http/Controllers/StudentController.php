@@ -37,7 +37,8 @@ class StudentController extends Controller
             'email' => 'required|unique:users|email'
         ]);
         try {
-            User::create(array_merge($request->only(['name', 'email']), ['email_verified_at' => $request->verified ? now() : null]));
+            $user = User::create($request->only(['name', 'email']));
+            $user->markEmailAsVerified();
             return redirect()->route('students.index')->with('success', 'Student created successfully');
         } catch (QueryException $e) {
             Log::error($e->getMessage());
@@ -71,6 +72,9 @@ class StudentController extends Controller
             'email' => 'required|email'
         ]);
         try {
+            if ($request->verified === "on") {
+                $student->markEmailAsVerified();
+            }
             $student->update($request->only(['name', 'email']));
             return redirect()->route('students.index')->with('success', 'Student updated successfully');
         } catch (QueryException $e) {
@@ -88,7 +92,8 @@ class StudentController extends Controller
         //
     }
 
-    public function manageClass(User $student){
+    public function manageClass(User $student)
+    {
 
     }
 }
