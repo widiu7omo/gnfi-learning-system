@@ -12,6 +12,7 @@
                 </a>
             </div>
         </div>
+        <x-session-alert/>
         <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
@@ -22,6 +23,10 @@
                     <th scope="col"
                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">
                         Description
+                    </th>
+                    <th scope="col"
+                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">
+                        Total Students
                     </th>
                     <th scope="col"
                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell">
@@ -45,22 +50,46 @@
                         </td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">{{$studyClass->desc}}
                         </td>
+                        <td class="px-3 py-4 text-sm text-gray-500">{{$studyClass->get_total_students()}}</td>
                         <td class="px-3 py-4 text-sm text-gray-500">{{$studyClass->status == 0?'Inactive':'Active'}}</td>
                         <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <a href="{{route('study-class.edit',$studyClass->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <form action="{{route('study-class.destroy',$studyClass->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-indigo-600 hover:text-indigo-900">Delete
-                                </button>
-                            </form>
-                            <div class="divide-amber-50"></div>
-                            <a href="{{route('study-class.toggle',$studyClass->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">{{$studyClass->status == 0?'Activate':'Deactivate'}}</a>
-                            <div class="divide-amber-50"></div>
-                            <a href="{{route('study-class.view-students',$studyClass->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">View Students</a>
+                            <div class="relative inline-block text-left" x-data="menu({open:false})" x-init="init()"
+                                 @keydown.escape.stop="open = false; focusButton()" @click.away="onClickAway($event)">
+                                <div>
+                                    <button type="button" @click="onButtonClick()"
+                                            class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                            id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <span class="sr-only">Open options</span>
+                                        <x-heroicon-s-ellipsis-vertical class="h-5 w-5"/>
+                                    </button>
+                                </div>
+                                <div x-show="open" x-cloak
+                                     class="origin-top-right absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                     tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <a href="{{route('study-class.edit',$studyClass->id)}}"
+                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+                                           role="menuitem">Edit</a>
+                                        <form action="{{route('study-class.destroy',$studyClass->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="text-gray-700 block px-4 py-2 text-sm text-left hover:bg-gray-100 w-full"
+                                                role="menuitem">Delete
+                                            </button>
+                                        </form>
+                                        <a href="{{route('study-class.toggle',$studyClass->id)}}"
+                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+                                           role="menuitem">{{$studyClass->status == 0?'Activate':'Deactivate'}}</a>
+                                        <a href="{{route('study-class.view-students',$studyClass->id)}}"
+                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
+                                           role="menuitem">View
+                                            Students</a>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @empty

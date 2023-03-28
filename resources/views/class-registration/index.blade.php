@@ -12,6 +12,7 @@
             {{--                </a>--}}
             {{--            </div>--}}
         </div>
+        <x-session-alert/>
         <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
@@ -50,25 +51,48 @@
                                 @class(["px-2 py-1 text-white rounded w-fit",$classRegistration->status == 0?"bg-indigo-600":($classRegistration->status == 1?'bg-green-600':"bg-red-600")])>{{$classRegistration->status == 0?"Waiting Confirmation":($classRegistration->status == 1?'Accept':'Decline')}}</div>
                         </td>
                         <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <form action="{{route('class-registration.accept',$classRegistration->id)}}"
-                                  method="POST">
-                                @csrf
-                                <button class="text-indigo-600 hover:text-indigo-900">Accept
-                                </button>
-                            </form>
-                            <form action="{{route('class-registration.decline',$classRegistration->id)}}"
-                                  method="POST">
-                                @csrf
-                                <button class="text-indigo-600 hover:text-indigo-900">Decline
-                                </button>
-                            </form>
-                            <form action="{{route('class-registration.accept',$classRegistration->id)}}"
-                                  method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-indigo-600 hover:text-indigo-900">Remove
-                                </button>
-                            </form>
+                            <div class="relative inline-block text-left" x-data="menu({open:false})" x-init="init()"
+                                 @keydown.escape.stop="open = false; focusButton()" @click.away="onClickAway($event)">
+                                <div>
+                                    <button type="button" @click="onButtonClick()"
+                                            class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                            id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <span class="sr-only">Open options</span>
+                                        <x-heroicon-s-ellipsis-vertical class="h-5 w-5"/>
+                                    </button>
+                                </div>
+                                <div x-show="open" x-cloak
+                                     class="origin-top-right absolute right-0 z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                     tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <form action="{{route('class-registration.accept',$classRegistration->id)}}"
+                                              method="POST">
+                                            @csrf
+                                            <button class="text-gray-700 block px-4 py-2 text-sm text-left hover:bg-gray-100 w-full">
+                                                Accept
+                                            </button>
+                                        </form>
+                                        <form action="{{route('class-registration.decline',$classRegistration->id)}}"
+                                              method="POST">
+                                            @csrf
+                                            <button class="text-gray-700 block px-4 py-2 text-sm text-left hover:bg-gray-100 w-full">
+                                                Decline
+                                            </button>
+                                        </form>
+                                        <form action="{{route('class-registration.destroy',$classRegistration->id)}}"
+                                              method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-gray-700 block px-4 py-2 text-sm text-left hover:bg-gray-100 w-full">
+                                                Remove
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @empty

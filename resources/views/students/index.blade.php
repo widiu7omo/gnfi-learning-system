@@ -50,17 +50,38 @@
                                 @class(["px-2 py-1 text-white rounded w-fit",$student->isVerified()?"bg-indigo-600":"bg-red-600"])>{{$student->isVerified()?'Verified':"Not Verified"}}</div>
                         </td>
                         <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <a href="{{route('students.edit',$student->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <form action="{{route('students.destroy',$student->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-indigo-600 hover:text-indigo-900">Delete
-                                </button>
-                            </form>
-                            <div class="divide-amber-50"></div>
-                            <a href="{{route('students.manage-class',$student->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">Manage Study Class</a>
+                            <div class="relative inline-block text-left" x-data="menu({open:false})" x-init="init()"
+                                 @keydown.escape.stop="open = false; focusButton()" @click.away="onClickAway($event)">
+                                <div>
+                                    <button type="button" @click="onButtonClick()"
+                                            class="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                            id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <span class="sr-only">Open options</span>
+                                        <x-heroicon-s-ellipsis-vertical class="h-5 w-5"/>
+                                    </button>
+                                </div>
+                                <div x-show="open" x-cloak
+                                     class="origin-top-right absolute right-0 z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                     tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <a href="{{route('students.edit',$student->id)}}"
+                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Edit</a>
+                                        <form action="{{route('students.destroy',$student->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="text-gray-700 block px-4 py-2 text-sm text-left hover:bg-gray-100 w-full">
+                                                Delete
+                                            </button>
+                                        </form>
+{{--                                        <a href="{{route('students.manage-class',$student->id)}}"--}}
+{{--                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Manage Study--}}
+{{--                                            Class</a>--}}
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @empty
