@@ -54,14 +54,18 @@
             </div>
         </div>
         <div class="-mx-4 mt-8 overflow-hidden w-full">
-            <div class="w-full flex justify-end items-center space-x-3 mb-4">
-                <x-text-input name="search" label="Search Students" class="block mt-1 w-[400px]" type="text"
-                              placeholder="Search Students"
-                              id="search_students"/>
-                <button
-                    class="bg-white rounded-lg border shadow-sm border-gray-300 p-2 mt-1 flex items-center justify-center">
-                    <x-heroicon-o-magnifying-glass class="w-6 h-6 text-indigo-600"/>
-                </button>
+            <div class="w-full mb-4">
+                <form action="{{route('study-class.manage-students',$studyClass->id)}}"
+                      class="flex justify-end items-center space-x-3 ">
+                    <x-text-input name="search" label="Search Students" class="block mt-1 w-[400px]" type="text"
+                                  placeholder="Search Students"
+                                  init-value="{{request()->search ?? '' }}"
+                                  id="search_students"/>
+                    <button
+                        class="bg-white rounded-lg border shadow-sm border-gray-300 p-2 mt-1 flex items-center justify-center">
+                        <x-heroicon-o-magnifying-glass class="w-6 h-6 text-indigo-600"/>
+                    </button>
+                </form>
             </div>
             <div x-show="successSaved" x-cloak
                  class="rounded-lg bg-green-50 border border-green-200 p-4 text-green-600 font-medium text-sm flex flex-row">

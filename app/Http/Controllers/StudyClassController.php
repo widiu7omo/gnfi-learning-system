@@ -144,9 +144,14 @@ class StudyClassController extends Controller
      * Ability to manage students specific class
      */
 
-    public function manageStudents(StudyClass $studyClass)
+    public function manageStudents(StudyClass $studyClass, Request $request)
     {
         $students = User::studentsOnly();
+        if ($request->search) {
+            $students = $students->where('name', 'LIKE', "%{$request->search}%")->get();
+        } else {
+            $students = $students->get();
+        }
         return view('study-class.manage-students', compact('studyClass', 'students'));
     }
 }

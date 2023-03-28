@@ -63,6 +63,6 @@ class User extends Authenticatable
 
     public static function studentsOnly()
     {
-        return User::role('student')->get();
+        return User::role('student');
     }
 }
