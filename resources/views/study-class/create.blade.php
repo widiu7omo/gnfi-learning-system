@@ -13,7 +13,7 @@
             </div>
         </div>
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="mt-3 border border-red-200 bg-red-50">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -22,7 +22,7 @@
                 </ul>
             </div>
         @endif
-        <div class="bg-gray-50 shadow rounded-xl p-8 mt-8">
+        <div class="bg-gray-50 shadow rounded-xl p-8 mt-8 border border-gray-200">
             <form action="{{route('study-class.store')}}" method="post">
                 @csrf
                 @include("study-class.form")

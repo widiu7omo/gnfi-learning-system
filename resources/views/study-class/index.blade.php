@@ -40,7 +40,7 @@
                             <dl class="font-normal lg:hidden">
                                 <dt class="sr-only">{{$studyClass->desc}}
                                 </dt>
-                                <dt class="sr-only sm:hidden">Active</dt>
+                                <dt class="sr-only sm:hidden">{{$studyClass->status == 0?'Inactive':'Active'}}</dt>
                             </dl>
                         </td>
                         <td class="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">{{$studyClass->desc}}
@@ -58,6 +58,9 @@
                             <div class="divide-amber-50"></div>
                             <a href="{{route('study-class.toggle',$studyClass->id)}}"
                                class="text-indigo-600 hover:text-indigo-900">{{$studyClass->status == 0?'Activate':'Deactivate'}}</a>
+                            <div class="divide-amber-50"></div>
+                            <a href="{{route('study-class.manage-students',$studyClass->id)}}"
+                               class="text-indigo-600 hover:text-indigo-900">Manage Students</a>
                         </td>
                     </tr>
                 @empty

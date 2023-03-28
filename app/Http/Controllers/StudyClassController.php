@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\StudyClass;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class StudyClassController extends Controller
@@ -35,8 +37,14 @@ class StudyClassController extends Controller
             'name' => 'required',
             'desc' => 'required'
         ]);
-        StudyClass::create($request->only(['name', 'desc']));
-        return redirect()->route('study-class.index')->with('success', 'New class created successfully');
+        try {
+            StudyClass::create($request->only(['name', 'desc']));
+            return redirect()->route('study-class.index')->with('success', 'New class created successfully');
+        } catch (QueryException $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('study-class.index')->with('error', 'Failed to create class');
+        }
+
     }
 
     /**
@@ -64,8 +72,13 @@ class StudyClassController extends Controller
             'name' => 'required',
             'desc' => 'required'
         ]);
-        $studyClass->update($request->only(['name', 'desc']));
-        return redirect()->route('study-class.index')->with('success', 'Study Class updated successfully');
+        try {
+            $studyClass->update($request->only(['name', 'desc']));
+            return redirect()->route('study-class.index')->with('success', 'Study Class updated successfully');
+        } catch (QueryException $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('study-class.index')->with('error', 'Study Class failed to update');
+        }
     }
 
     /**
@@ -73,8 +86,14 @@ class StudyClassController extends Controller
      */
     public function destroy(StudyClass $studyClass)
     {
-        $studyClass->delete();
-        return redirect()->route('study-class.index')->with('success', 'Study Class deleted successfully');
+        try {
+            $studyClass->delete();
+            return redirect()->route('study-class.index')->with('success', 'Study Class deleted successfully');
+        } catch (QueryException $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('study-class.index')->with('error', 'Study Class failed to delete');
+        }
+
     }
 
     /**
@@ -82,9 +101,16 @@ class StudyClassController extends Controller
      */
     public function toggle(StudyClass $studyClass)
     {
-        $studyClass->update(['status' => !$studyClass->status]);
-        return redirect()->route('study-class.index')
-            ->with('success', 'Class ' . $studyClass->status == 0 ? 'Activated' : "Deactivated");
+        try {
+            $studyClass->update(['status' => !$studyClass->status]);
+            return redirect()->route('study-class.index')
+                ->with('success', 'Class ' . $studyClass->status == 0 ? 'Activated' : "Deactivated");
+        } catch (QueryException $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('study-class.index')
+                ->with('success', 'Class failed to ' . $studyClass->status == 0 ? 'Activated' : "Deactivated");
+        }
+
     }
 
     /**
@@ -99,7 +125,8 @@ class StudyClassController extends Controller
     /**
      * Discover class available for students
      */
-    public function discoverClasses(){
+    public function discoverClasses()
+    {
         return view('study-class.discover-classes');
     }
 }
