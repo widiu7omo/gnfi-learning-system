@@ -11,7 +11,7 @@ class ClassRegistrationController extends Controller
      */
     public function index()
     {
-        //
+        return view('class-registration.index');
     }
 
     /**
