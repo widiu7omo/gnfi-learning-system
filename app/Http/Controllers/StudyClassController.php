@@ -148,9 +148,9 @@ class StudyClassController extends Controller
     {
         $students = User::studentsOnly();
         if ($request->search) {
-            $students = $students->where('name', 'LIKE', "%{$request->search}%")->get();
+            $students = $students->where('name', 'LIKE', "%{$request->search}%")->paginate(15);
         } else {
-            $students = $students->get();
+            $students = $students->paginate(15);
         }
         return view('study-class.manage-students', compact('studyClass', 'students'));
     }

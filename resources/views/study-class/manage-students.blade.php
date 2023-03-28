@@ -98,6 +98,9 @@
                     <div>No students registered</div>
                 @endforelse
             </div>
+            <div class="px-4 pt-6">
+                {{$students->links()}}
+            </div>
         </div>
     </div>
 </x-admin-shell>
