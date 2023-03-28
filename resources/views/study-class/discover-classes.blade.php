@@ -38,6 +38,9 @@
                     </div>
                 @endforelse
             </div>
+            <div class="mt-8">
+                {{$studyClasses->links()}}
+            </div>
         </div>
     </div>
 </x-app-layout>
