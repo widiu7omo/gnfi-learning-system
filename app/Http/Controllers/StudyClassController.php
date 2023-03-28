@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudyClass;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -84,5 +85,21 @@ class StudyClassController extends Controller
         $studyClass->update(['status' => !$studyClass->status]);
         return redirect()->route('study-class.index')
             ->with('success', 'Class ' . $studyClass->status == 0 ? 'Activated' : "Deactivated");
+    }
+
+    /**
+     * Showing student's classes
+     */
+    public function studentClasses(User $student)
+    {
+//        $classes = $student->
+        return view('study-class.your-classes');
+    }
+
+    /**
+     * Discover class available for students
+     */
+    public function discoverClasses(){
+        return view('study-class.discover-classes');
     }
 }
