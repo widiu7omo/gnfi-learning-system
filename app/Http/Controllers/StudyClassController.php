@@ -126,16 +126,27 @@ class StudyClassController extends Controller
      */
     public function discoverClasses()
     {
-        $studyClasses = StudyClass::latest()->simplePaginate(15);
+        $studyClasses = StudyClass::where('status', '=', '1')->latest()->simplePaginate(15);
         return view('study-class.discover-classes', compact('studyClasses'));
     }
 
     /**
-     * Ability to manage students each class
+     * Get list of students that enrolled specific class
+     */
+
+    public function viewStudents(StudyClass $studyClass)
+    {
+        $students = $studyClass->students()->paginate(5);
+        return view('study-class.view-students', compact('studyClass', 'students'));
+    }
+
+    /**
+     * Ability to manage students specific class
      */
 
     public function manageStudents(StudyClass $studyClass)
     {
-        return view('study-class.manage-students', compact('studyClass'));
+        $students = User::studentsOnly();
+        return view('study-class.manage-students', compact('studyClass', 'students'));
     }
 }
