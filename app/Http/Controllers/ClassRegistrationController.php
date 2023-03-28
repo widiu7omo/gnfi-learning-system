@@ -16,7 +16,7 @@ class ClassRegistrationController extends Controller
      */
     public function index()
     {
-        $classRegistrations = ClassRegistration::paginate(5);
+        $classRegistrations = ClassRegistration::orderBy('id', 'desc')->paginate(5);
         return view('class-registration.index', compact('classRegistrations'));
     }
 
