@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function study_classes(): BelongsToMany
     {
-        return $this->belongsToMany(StudyClass::class, 'class_registrations');
+        return $this->belongsToMany(StudyClass::class, 'class_registrations')->withPivot('status');
     }
 
     public function class_registrations(): HasMany

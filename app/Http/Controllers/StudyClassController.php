@@ -50,9 +50,9 @@ class StudyClassController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function openEnrolledClass(StudyClass $studyClass)
     {
-        //
+        return view('study-class.open', compact('studyClass'));
     }
 
     /**
@@ -118,8 +118,7 @@ class StudyClassController extends Controller
      */
     public function studentClasses(User $student)
     {
-//        $classes = $student->
-        return view('study-class.your-classes');
+        return view('study-class.your-classes', compact('student'));
     }
 
     /**
@@ -127,6 +126,16 @@ class StudyClassController extends Controller
      */
     public function discoverClasses()
     {
-        return view('study-class.discover-classes');
+        $studyClasses = StudyClass::latest()->simplePaginate(15);
+        return view('study-class.discover-classes', compact('studyClasses'));
+    }
+
+    /**
+     * Ability to manage students each class
+     */
+
+    public function manageStudents(StudyClass $studyClass)
+    {
+        return view('study-class.manage-students', compact('studyClass'));
     }
 }

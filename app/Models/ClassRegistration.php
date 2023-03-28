@@ -10,9 +10,13 @@ class ClassRegistration extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status'
+    ];
+
     public function student(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function study_class(): BelongsTo
