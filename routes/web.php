@@ -47,7 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/study-class/{studyClass}/manage-students', [StudyClassController::class, 'manageStudents'])->name('study-class.manage-students');
     Route::resource('/students', StudentController::class)->except('show');
     Route::get('/students/{student}/manage-classes', [StudentController::class, 'manageClass'])->name('students.manage-class');
-    Route::resource('/class-registration', ClassRegistrationController::class)->except(['show', 'create', 'update']);
+    Route::resource('/class-registration', ClassRegistrationController::class)->except(['show', 'create', 'update', 'store']);
+    Route::post('/class-registration/{studyClass}/addStudents', [ClassRegistrationController::class, 'addStudents'])->name('class-registration.add-students');
+    Route::post('/class-registration/{studyClass}/removeStudents', [ClassRegistrationController::class, 'removeStudents'])->name('class-registration.remove-students');
     Route::post('/class-registration/{classRegistration}/accept', [ClassRegistrationController::class, 'accept'])->name('class-registration.accept');
     Route::post('/class-registration/{classRegistration}/decline', [ClassRegistrationController::class, 'decline'])->name('class-registration.decline');
 });
