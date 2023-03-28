@@ -85,7 +85,7 @@
                 <div class="mt-5 flex-grow flex flex-col">
                     <nav class="flex-1 px-2 pb-4 space-y-1">
                         <a href="{{route('dashboard')}}"
-                            @class([Str::contains(url()->current(),'dashboard') ?
+                            @class([request()->routeIs('dashboard') ?
                                 'bg-gray-200 text-gray-900'
                                 :"text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                                 'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -94,7 +94,7 @@
                             Dashboard
                         </a>
                         <a href="{{route('students.index')}}"
-                            @class([Str::contains(url()->current(),'students') ?
+                            @class([request()->routeIs('students.index') ?
                                  'bg-gray-200 text-gray-900'
                                  :"text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -105,7 +105,7 @@
                         </a>
 
                         <a href="{{route('study-class.index')}}"
-                            @class([Str::contains(url()->current(),'study-class') ?
+                            @class([request()->routeIs('study-class.index') ?
                                  'bg-gray-200 text-gray-900'
                                  :"text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -116,7 +116,7 @@
                         </a>
 
                         <a href="{{route('class-registration.index')}}"
-                            @class([Str::contains(url()->current(),'class-registration') ?
+                            @class([request()->routeIs('class-registration.index') ?
                                  'bg-gray-200 text-gray-900'
                                  :"text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -200,11 +200,15 @@
                                    :class="{ 'bg-gray-100': activeIndex === 1 }" role="menuitem" tabindex="-1"
                                    id="user-menu-item-1" @mouseenter="activeIndex = 1" @mouseleave="activeIndex = -1"
                                    @click="open = false; focusButton()">Settings</a>
-
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700"
-                                   :class="{ 'bg-gray-100': activeIndex === 2 }" role="menuitem" tabindex="-1"
-                                   id="user-menu-item-2" @mouseenter="activeIndex = 2" @mouseleave="activeIndex = -1"
-                                   @click="open = false; focusButton()">Sign out</a>
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-responsive-nav-link :href="route('logout')"
+                                                           onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-responsive-nav-link>
+                                </form>
 
                             </div>
 
