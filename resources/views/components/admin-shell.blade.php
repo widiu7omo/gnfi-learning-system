@@ -116,7 +116,7 @@
                         </a>
 
                         <a href="{{route('class-registration.index')}}"
-                            @class([Str::contains(url()->current(),'dashboard') ?
+                            @class([Str::contains(url()->current(),'class-registration') ?
                                  'bg-gray-200 text-gray-900'
                                  :"text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -215,7 +215,7 @@
 
             <main class="flex-1">
                 <div class="py-8">
-                    <div class="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                         <!-- Replace with your content -->
                         {{ $slot }}
                         <!-- /End replace -->
