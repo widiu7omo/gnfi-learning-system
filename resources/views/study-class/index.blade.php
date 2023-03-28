@@ -59,8 +59,8 @@
                             <a href="{{route('study-class.toggle',$studyClass->id)}}"
                                class="text-indigo-600 hover:text-indigo-900">{{$studyClass->status == 0?'Activate':'Deactivate'}}</a>
                             <div class="divide-amber-50"></div>
-                            <a href="{{route('study-class.manage-students',$studyClass->id)}}"
-                               class="text-indigo-600 hover:text-indigo-900">Manage Students</a>
+                            <a href="{{route('study-class.view-students',$studyClass->id)}}"
+                               class="text-indigo-600 hover:text-indigo-900">View Students</a>
                         </td>
                     </tr>
                 @empty
@@ -70,12 +70,10 @@
                 @endforelse
                 </tbody>
             </table>
-            @if($studyClasses->count() > 5)
-                <div
-                    class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                    {{$studyClasses->links()}}
-                </div>
-            @endif
+            <div
+                class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                {{$studyClasses->links()}}
+            </div>
         </div>
     </div>
 </x-admin-shell>

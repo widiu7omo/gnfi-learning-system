@@ -70,12 +70,10 @@
                 @endforelse
                 </tbody>
             </table>
-            @if($students->count() > 5)
-                <div
-                    class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                    {{$students->links()}}
-                </div>
-            @endif
+            <div
+                class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                {{$students->links()}}
+            </div>
         </div>
     </div>
 </x-admin-shell>

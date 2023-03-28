@@ -78,12 +78,10 @@
                 @endforelse
                 </tbody>
             </table>
-            @if($classRegistrations->count() > 5)
-                <div
-                    class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
-                    {{$classRegistrations->links()}}
-                </div>
-            @endif
+            <div
+                class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                {{$classRegistrations->links()}}
+            </div>
         </div>
     </div>
 </x-admin-shell>
