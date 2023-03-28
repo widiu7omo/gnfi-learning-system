@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->text("desc");
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
