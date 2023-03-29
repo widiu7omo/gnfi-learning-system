@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
@@ -87,9 +88,18 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $student)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $student->delete();
+            DB::commit();
+            return redirect()->route('students.index')->with('success', 'Student deleted successfully');
+        } catch (QueryException $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
+            return redirect()->route('students.index')->with('error', "You can't delete students that currently enrolled classes");
+        }
     }
 
     public function manageClass(User $student)

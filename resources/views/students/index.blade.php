@@ -12,6 +12,7 @@
             {{--                </a>--}}
             {{--            </div>--}}
         </div>
+        <x-session-alert/>
         <div class="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
@@ -75,9 +76,9 @@
                                                 Delete
                                             </button>
                                         </form>
-{{--                                        <a href="{{route('students.manage-class',$student->id)}}"--}}
-{{--                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Manage Study--}}
-{{--                                            Class</a>--}}
+                                        {{--                                        <a href="{{route('students.manage-class',$student->id)}}"--}}
+                                        {{--                                           class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Manage Study--}}
+                                        {{--                                            Class</a>--}}
                                     </div>
                                 </div>
                             </div>
