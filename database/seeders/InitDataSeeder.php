@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\StudyClass;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -39,6 +40,8 @@ class InitDataSeeder extends Seeder
         $superAdmin->assignRole(['super_admin']);
         $staff->assignRole(['staff']);
         $student->assignRole(['student']);
-
+        User::factory()->count(20)->create();
+        User::doesntHave('roles')->each(fn($user) => $user->assignRole(['student']));
+        StudyClass::factory()->count(20)->create();
     }
 }
