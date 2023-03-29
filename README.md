@@ -1,5 +1,7 @@
 ### How to test
 
+- Copy .env.example to .env
+- Make sure you have configure database connection properly
 - Run ```php artisan migrate --seed``` through Your Fav Terminal
 - Run ```php artisan serve``` if you using linux/mac. Please make sure you have php installed.
 - Access http://localhost:8000 from your fav browser
