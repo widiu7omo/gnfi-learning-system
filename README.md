@@ -8,7 +8,8 @@
 
 ### Accounts
 
-```Email | Password```
-Admin role ```super@adm.com | super```
-Staff role ```staff@adm.com | staff```
-Student role ```student@adm.com | student```
+| Role | Email | Password |
+|------|-------|----------|
+|Admin role|super@adm.com|super|
+|Staff role|staff@adm.com|staff|
+|Student role|student@adm.com|student|
